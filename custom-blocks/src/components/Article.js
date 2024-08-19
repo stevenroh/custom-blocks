@@ -1,0 +1,76 @@
+import MicroModal from "react-micro-modal";
+
+import {
+  renderPostCategories,
+  formatDate,
+  getPostFeaturedImage,
+} from "../utils";
+
+import { decodeEntities } from "@wordpress/html-entities";
+
+export const Article = ({ post }) => {
+  console.log(post);
+
+  return (
+    <MicroModal
+      key={post.id}
+      overrides={{
+        Dialog: {
+          className: "rohs-post__dialog",
+        },
+      }}
+      trigger={(open) => (
+        <a
+          onClick={open}
+          className="rohs-post flex flex-row justify-between items-stretch gap-4"
+        >
+          <div className="rohs-post__container__left w-4/12">
+            <img
+              className="rohs-post__container__image"
+              src={getPostFeaturedImage(post) || "https://placehold.co/400x400"}
+              alt={decodeEntities(post.title.raw)}
+            />
+          </div>
+
+          <div className="rohs-post__right w-8/12">
+            <div className="rohs-post__content">
+              <h2 className="rohs-post__content__title">
+                {decodeEntities(post.title.raw)}
+              </h2>
+
+              <p>{post.acf.price} </p>
+              <p>{post.acf.more_content} </p>
+            </div>
+          </div>
+        </a>
+      )}
+    >
+      {(close) => (
+        <div className="rohs-post-modal__content flex flex-row justify-between items-stretch gap-4 relative">
+          <div className="rohs-post__container__left w-1/2">
+            <img
+              className="rohs-post__container__image"
+              src={getPostFeaturedImage(post) || "https://placehold.co/400x400"}
+              alt={decodeEntities(post.title.raw)}
+            />
+          </div>
+
+          <div className="rohs-post__right w-1/2">
+            <div className="rohs-post__content">
+              <h2 className="rohs-post__content__title">
+                {decodeEntities(post.title.raw)}
+              </h2>
+
+              <p>{post.acf.price} </p>
+              <p>{post.acf.more_content} </p>
+            </div>
+          </div>
+
+          <button className="absolute top-0 right-0" onClick={close}>
+            X
+          </button>
+        </div>
+      )}
+    </MicroModal>
+  );
+};
