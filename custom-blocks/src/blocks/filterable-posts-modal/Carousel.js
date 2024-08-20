@@ -3,11 +3,19 @@ import { store as coreDataStore } from "@wordpress/core-data";
 import { useState } from "@wordpress/element";
 import { Article } from "../../components/Article";
 
-const POST_TYPE = "menu_item";
-// const POST_TYPE = "post";
+// const POST_TYPE = "menu_item";
+const POST_TYPE = "post";
 
 export const Carousel = ({ attributes }) => {
   const [category, setCategory] = useState(null);
+
+  console.log(attributes);
+  let queryParams = {};
+
+  if (attributes?.category > 0)
+    queryParams = {
+      parent: attributes.category,
+    };
 
   const { posts, categories } = useSelect((select) => {
     return {
@@ -18,12 +26,13 @@ export const Carousel = ({ attributes }) => {
       }),
       categories: select(coreDataStore).getEntityRecords(
         "taxonomy",
-        "category"
+        "category",
+        queryParams
       ),
     };
   }, []);
 
-  console.table(posts);
+  // console.table(posts);
 
   const handleCategoryChange = (categoryId, e) => {
     e.preventDefault();
@@ -47,14 +56,14 @@ export const Carousel = ({ attributes }) => {
     return post.categories.includes(category);
   };
 
-  console.log(posts);
+  // console.log(posts);
 
   const filteredPosts = posts?.filter((post) => shouldDisplayPost(post));
 
   return (
     <>
       <ul className="rohs-categories-filter">
-        <li className="rohs-categories-filter__category">
+        {/* <li className="rohs-categories-filter__category">
           <a
             className="rohs-button-filter"
             href="#"
@@ -62,7 +71,7 @@ export const Carousel = ({ attributes }) => {
           >
             <span className="rohs-button-filter__inner">Tout</span>
           </a>
-        </li>
+        </li> */}
         {categories?.map((cat) => (
           <li className="rohs-categories-filter__category" key={cat.id}>
             <a

@@ -11,6 +11,11 @@
 	"supports": {
 		"html": false
 	},
+	"attributes": {
+		"category": {
+			"type": "string"
+		}
+	},
 	"keywords": [""],
 	"textdomain": "rohs-custom-blocks",
 	"editorScript": "file:./index.js",
