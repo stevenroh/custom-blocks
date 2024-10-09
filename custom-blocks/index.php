@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       Custom blocks
  * Description:
- * Version:           0.0.1
+ * Version:           0.1.0
  * Author:            Steven Roh
  * Text Domain:       rohs-custom-blocks
  *

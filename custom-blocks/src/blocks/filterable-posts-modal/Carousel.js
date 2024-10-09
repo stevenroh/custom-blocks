@@ -3,19 +3,24 @@ import { store as coreDataStore } from "@wordpress/core-data";
 import { useState } from "@wordpress/element";
 import { Article } from "../../components/Article";
 
-// const POST_TYPE = "menu_item";
-const POST_TYPE = "post";
+const POST_TYPE = "menu_item";
+// const POST_TYPE = "post";
 
 export const Carousel = ({ attributes }) => {
   const [category, setCategory] = useState(null);
 
   console.log(attributes);
-  let queryParams = {};
+  let queryParamsPosts,
+    queryParamsCategories = {};
 
-  if (attributes?.category > 0)
-    queryParams = {
+  if (attributes?.category) {
+    queryParamsPosts = {
+      categories: attributes.category,
+    };
+    queryParamsCategories = {
       parent: attributes.category,
     };
+  }
 
   const { posts, categories } = useSelect((select) => {
     return {
@@ -23,11 +28,13 @@ export const Carousel = ({ attributes }) => {
         per_page: 100,
         _embed: true,
         acf_format: "standard",
+        context: "view",
+        ...queryParamsPosts,
       }),
       categories: select(coreDataStore).getEntityRecords(
         "taxonomy",
         "category",
-        queryParams
+        queryParamsCategories
       ),
     };
   }, []);
@@ -57,7 +64,6 @@ export const Carousel = ({ attributes }) => {
   };
 
   // console.log(posts);
-
   const filteredPosts = posts?.filter((post) => shouldDisplayPost(post));
 
   return (

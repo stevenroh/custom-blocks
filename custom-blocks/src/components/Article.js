@@ -15,8 +15,15 @@ export const Article = ({ post }) => {
     <MicroModal
       key={post.id}
       overrides={{
+        Overlay: {
+          className: "rohs-post__overlay",
+        },
         Dialog: {
           className: "rohs-post__dialog",
+          style: {
+            zIndex: 1000,
+            position: "absolute",
+          },
         },
       }}
       trigger={(open) => (
@@ -28,15 +35,19 @@ export const Article = ({ post }) => {
             <img
               className="rohs-post__container__image"
               src={getPostFeaturedImage(post) || "https://placehold.co/400x400"}
-              alt={decodeEntities(post.title.raw)}
+              alt={decodeEntities(post.title.rendered)}
             />
           </div>
 
           <div className="rohs-post__right w-8/12">
             <div className="rohs-post__content">
               <h2 className="rohs-post__content__title">
-                {decodeEntities(post.title.raw)}
+                {decodeEntities(post.title.rendered)}
               </h2>
+
+              <p className="rohs-post__content__description">
+                {decodeEntities(post.content.rendered)}
+              </p>
 
               <p>{post.acf.price} </p>
               <p>{post.acf.more_content} </p>
@@ -51,15 +62,19 @@ export const Article = ({ post }) => {
             <img
               className="rohs-post__container__image"
               src={getPostFeaturedImage(post) || "https://placehold.co/400x400"}
-              alt={decodeEntities(post.title.raw)}
+              alt={decodeEntities(post.title.rendered)}
             />
           </div>
 
           <div className="rohs-post__right w-1/2">
             <div className="rohs-post__content">
               <h2 className="rohs-post__content__title">
-                {decodeEntities(post.title.raw)}
+                {decodeEntities(post.title.rendered)}
               </h2>
+
+              <p className="rohs-post__content__description">
+                {decodeEntities(post.content.rendered)}
+              </p>
 
               <p>{post.acf.price} </p>
               <p>{post.acf.more_content} </p>
